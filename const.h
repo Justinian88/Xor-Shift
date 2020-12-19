@@ -1,0 +1,7 @@
+#ifndef CONST_H
+#define CONST_H
+
+#define MY_SEED_32 2463534242
+#define MY_SEED_64 88172645463325252LL
+
+#endif // CONST_H
