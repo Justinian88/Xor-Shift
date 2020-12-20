@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <inttypes.h>
 
 #include "tommath.h"
 #include "wiki.h"
@@ -9,67 +11,25 @@
 int main()
 {
     mp_int val;
-    int res;
-    char stroka[150];
+    int res, a, b, c;
     res = mp_init(&val);
 
-    /* TEST 32-bit integer */
-    int a = 1, b=3, c =10;
-    printf("\n1) %lu \n", Xorshift_32(a, b, c));
+    /* TEST 32-bit integer*/
+    a = 1, b=1, c =1;
+    printf("\n1) %" PRIu32, Xorshift_32(a, b, c));
     res = mp_xorshift_32(&a, &b, &c, &val);
-    res = mp_to_radix(&val, stroka, 150, NULL, 10);
-    printf("1) %s \n" , stroka);
+    printf("\n1) %" PRIu32 "\n", mp_get_i32(&val));
 
-    /* TEST 64-bit integer */
+    /*TEST 64-bit integer*/
     a = 4, b=1, c =25;
-    printf("\n2) %lu \n", Xorshift_64(a, b, c));
+    printf("\n2) %" PRIu64, Xorshift_64(a, b, c));
     res = mp_xorshift_64(&a, &b, &c, &val);
-    res = mp_to_radix(&val, stroka, 150, NULL, 10);
-    printf("2) %s \n" , stroka);
+    printf("\n2) %" PRIu64 "\n", mp_get_i64(&val));
 
+    mp_clear(&val);
     return 1;
 }
 
-
-/*
-int main()
-{
-    mp_int A, B, C;
-    int res;
-    res = mp_init(&A);
-    res = mp_init(&B);
-    res = mp_init(&C);
-
-    res = mp_read_radix(&A, "14", 10);
-    res = mp_read_radix(&B, "127", 10);
-
-    res = mp_xor(&A, &B, &C);
-    char stroka[150];
-    res = mp_to_radix(&A, stroka, 150, NULL, 10);
-    printf("\n%s \n" , stroka);
-    res = mp_to_radix(&B, stroka, 150, NULL, 10);
-    printf("\n%s \n" , stroka);
-    res = mp_to_radix(&C, stroka, 150, NULL, 10);
-    printf("\n%s \n" , stroka);
-
-    return 1;
-}
-
-
-int main()
-{
-    printf("Hello, world!\n");
-    int i;
-    struct xoshiro256ss_state number = {0xfff, 0x11f, 0x22f, 0xabcd};
-    for (i=0; i<4; ++i)
-    {
-        printf("%llx\n", number.s[i]);
-    }
-    uint64_t result = xoshiro256ss(&number);
-    printf("%llx\n", result);
-    return 0;
-}
-*/
 /*
 static inline uint64_t rotl(const uint64_t x, int k) {
     return (x << k) | (x >> (64 - k));

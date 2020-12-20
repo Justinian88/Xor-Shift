@@ -1,23 +1,28 @@
-#include "const.h"
-
 #ifndef XOR_H
 #define XOR_H
 
-unsigned long Xorshift_32 (int a, int b, int c)
+#include <stdint.h>
+#include <stdio.h>
+#include <inttypes.h>
+#include "const.h"
+
+uint32_t Xorshift_32 (int a, int b, int c)
 {
-     static unsigned long y= MY_SEED_32;
-     y=(y<<a);
-     y=(y>>b);
-     y=(y<<c);
+     uint32_t y= MY_SEED_32;
+     printf("\n SEED:\t %" PRIu32, y);
+     y^=(y<<a);
+     y^=(y>>b);
+     y^=(y<<c);
      return y;
 };
 
-unsigned long Xorshift_64 (int a, int b, int c)
+uint64_t Xorshift_64 (int a, int b, int c)
 {
-     static unsigned long long y= MY_SEED_64;
-     y=(y<<a);
-     y=(y>>b);
-     y=(y<<c);
+     uint64_t y= MY_SEED_64;
+     printf("\n SEED:\t %" PRIu64, y);
+     y^=(y<<a);
+     y^=(y>>b);
+     y^=(y<<c);
      return y;
 };
 
