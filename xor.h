@@ -44,4 +44,44 @@ uint32_t XorWow_32(struct xorwow_set *params)
     return (params->d+=362437)+params->v;
 };
 
+// Дополнительно определена функция rotate
+static inline uint64_t rotl(const uint64_t x, int k) {
+    return (x << k) | (x >> (64 - k));
+};
+
+struct xoshiro_set{
+    uint64_t s1, s2, s3, s0;
+};
+
+uint64_t xoshiro_256p(struct xoshiro_set *params) {
+    const uint64_t result = rotl(params->s0 + params->s3, 23) + params->s0;
+
+    const uint64_t t = params->s1 << 17;
+
+    params->s2 ^= params->s0;
+    params->s3 ^= params->s1;
+    params->s1 ^= params->s2;
+    params->s0 ^= params->s3;
+    params->s2 ^= t;
+
+    params->s3 = rotl(params->s3, 45);
+
+    return result;
+}
+
+uint64_t xoshiro_256ss(struct xoshiro_set *params) {
+    const uint64_t result = rotl(params->s1 * 5, 7) * 9;
+
+    const uint64_t t = params->s1 << 17;
+
+    params->s2 ^= params->s0;
+    params->s3 ^= params->s1;
+    params->s1 ^= params->s2;
+    params->s0 ^= params->s3;
+    params->s2 ^= t;
+
+    params->s3 = rotl(params->s3, 45);
+
+    return result;
+}
 #endif // XOR_H
