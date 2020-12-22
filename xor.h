@@ -26,4 +26,22 @@ uint64_t Xorshift_64 (int a, int b, int c)
      return y;
 };
 
+struct xorwow_set{
+    uint32_t x, y, z, w, v, d;
+};
+
+uint32_t XorWow_32(struct xorwow_set *params)
+{
+
+    uint32_t t=(params->x^(params->x>>2));
+
+    params->x = params->y;
+    params->y = params->z;
+    params->z = params->w;
+    params->w = params->v;
+    params->v = (params->v^(params->v<<4))^(t^(t<<1));
+
+    return (params->d+=362437)+params->v;
+};
+
 #endif // XOR_H
