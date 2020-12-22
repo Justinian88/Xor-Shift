@@ -103,4 +103,4 @@ mp_err mp_xoshiro_256ss (struct mp_xoshiro_set *params, mp_int *num) MP_WUR;
 
 ![alt text](https://sun9-47.userapi.com/impf/5ou0BJkeM04x2vxVy5bMUMlyVUrdHEs9aWP92g/YtFgeSAaeQY.jpg?size=584x686&quality=96&proxy=1&sign=8b4942d349976036213a38eb6d951a17&type=album)
 
-![alt text](https://sun9-58.userapi.com/impf/u3OME-17LzjwNdJAVe_JU_KIpk24o0W3275euA/IG60fr9a_z0.jpg?size=718x302&quality=96&proxy=1&sign=baeb48bdee9a2461be42ae1d9090db4a&type=album)
+![alt text](https://sun9-11.userapi.com/impf/Oyc2fJNsQJoSfp_ErmgPLonD9wY8-efipJXDHA/DtnsWLcYH6A.jpg?size=732x296&quality=96&proxy=1&sign=14b7a1531436d2914511d2f6ee37f6ea&type=album)
