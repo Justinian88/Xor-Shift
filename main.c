@@ -20,13 +20,13 @@ int main()
     printf("\nParametrs: a = %d, b = %d, c = %d", a, b, c);
     printf("\nArticle code: %" PRIu32, Xorshift_32(a, b, c));
     res = mp_xorshift_32(&a, &b, &c, &val);
-    printf("\nMy code:      %" PRIu32 "\n", mp_get_i32(&val));
+    printf("\nMy code:      %" PRIu32 "\n", mp_get_u32(&val));
 
     a = 7, b= 17, c = 21;
     printf("\nParametrs: a = %d, b = %d, c = %d", a, b, c);
     printf("\nArticle code: %" PRIu32, Xorshift_32(a, b, c));
     res = mp_xorshift_32(&a, &b, &c, &val);
-    printf("\nMy code:      %" PRIu32 "\n", mp_get_i32(&val));
+    printf("\nMy code:      %" PRIu32 "\n", mp_get_u32(&val));
 
 
     /* TEST 64-bit integer */
@@ -35,7 +35,7 @@ int main()
     printf("\nParametrs: a = %d, b = %d, c = %d", a, b, c);
     printf("\nArticle code: %" PRIu64, Xorshift_64(a, b, c));
     res = mp_xorshift_64(&a, &b, &c, &val);
-    printf("\nMy code:      %" PRIu64 "\n", mp_get_i64(&val));
+    printf("\nMy code:      %" PRIu64 "\n", mp_get_u64(&val));
 
 
     /* TEST xorwow 192-bit integer */
@@ -53,7 +53,7 @@ int main()
     printf("\n SEED:\t see const.h");
     printf("\nArticle code: %" PRIu32, XorWow_32(&wow_prms));
     res = mp_xorwow(&mp_wow_prms, &val);
-    printf("\nMy code:      %" PRIu32 "\n", mp_get_i32(&val));
+    printf("\nMy code:      %" PRIu32 "\n", mp_get_u32(&val));
     mp_clear_multi(&mp_wow_prms.d, &mp_wow_prms.x, &mp_wow_prms.y, &mp_wow_prms.z, &mp_wow_prms.w, &mp_wow_prms.v, NULL);
 
 
@@ -62,17 +62,22 @@ int main()
     // Set parametrs values
     printf("\n SEED:\t see const.h");
     struct xoshiro_set xoshiro_state1 = {XOSHIRO_1, XOSHIRO_2, XOSHIRO_3, XOSHIRO_4};
+    struct mp_xoshiro_set mp_xoshiro_state1;
+    res = mp_init_u64(&mp_xoshiro_state1.a, XOSHIRO_1);
+    res = mp_init_u64(&mp_xoshiro_state1.b, XOSHIRO_2);
+    res = mp_init_u64(&mp_xoshiro_state1.c, XOSHIRO_3);
+    res = mp_init_u64(&mp_xoshiro_state1.d, XOSHIRO_4);
     printf("\nArticle code: %" PRIu64, xoshiro_256p(&xoshiro_state1));
+    res = mp_xoshiro_256p(&mp_xoshiro_state1, &val);
+    printf("\nMy code:      %" PRIu64 "\n", mp_get_u64(&val));
 
 
-    /* TEST xoshiftro256** 256-bit integer */
-    printf("\n\t5 TEST xoshiftro256++ 256-bit integer");
-    // Set parametrs values
+    /* TEST xoshiftro256** 256-bit integer*/
+    printf("\n\t5 TEST xoshiftro256** 256-bit integer");
     printf("\n SEED:\t see const.h");
-    struct xoshiro_set xoshiro_state2 = {XOSHIRO_3, XOSHIRO_4, XOSHIRO_1, XOSHIRO_2};
-    printf("\nArticle code: %" PRIu64, xoshiro_256ss(&xoshiro_state2));
+    printf("\nArticle code: %" PRIu64, xoshiro_256ss(&xoshiro_state1));
+    res = mp_xoshiro_256ss(&mp_xoshiro_state1, &val);
+    printf("\nMy code:      %" PRIu64 "\n", mp_get_u64(&val));
 
-
-    mp_clear(&val);
     return 1;
 }
