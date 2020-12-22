@@ -11,19 +11,24 @@ Xorshift - семейство генераторов регистров сдви
  
  ## Представленные генераторы
  
-1) XorShift32: имеет одно 32-битное слово состояния и период 2 32 -1. 
+1) XorShift32: имеет одно 32-битное слово состояния и период 2^32 -1. 
 
 ```C
 mp_err mp_xorshift_32 (int *a, int *b, int *c, mp_int *num) MP_WUR;
 ```
 
-2) XorShift64: имеет одно 64-битное слово состояния и период 2 64 -1.
+2) XorShift64: имеет одно 64-битное слово состояния и период 2^64 -1.
 
 ```C
 mp_err mp_xorshift_64 (int *a, int *b, int *c, mp_int *num) MP_WUR;
 ```
 
-3)
+3) Xorwow: имеет одно 32-битное слово состояния и период до 2^192 −2^32.
+
+```C
+mp_err mp_xorwow (struct mp_xorwow_set *params, mp_int *num) MP_WUR;
+```
+
 4)
 5)
 
@@ -47,11 +52,19 @@ mp_err mp_xorshift_64 (int *a, int *b, int *c, mp_int *num) MP_WUR;
 
 ### const.h
 
-Содержатся значения seed для генераторов. Для удобства были вынесены в оотдельный файл с константами.
+Содержатся значения seed и иных параметров для генераторов. Для удобства были вынесены в отдельный файл с константами.
 
 ```C
 #define MY_SEED_32 2463542
 #define MY_SEED_64 8817264525252LL
+
+// Параметры для xorwow 32-bit
+#define WOW_X 123456789
+#define WOW_Y 362436069
+#define WOW_Z 521288629
+#define WOW_W 88675123
+#define WOW_V 5783321
+#define WOW_D 6615241
 ```
 
 ## Тесты
