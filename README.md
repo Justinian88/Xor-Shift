@@ -7,7 +7,7 @@
  
 Xorshift - семейство генераторов регистров сдвига, представляют собой класс генераторов псевдослучайных чисел , впервые описанных Джорджем Марсалья. Подробное описание алгоритмов и рекомендуемых к использованию констант приведенов в [статье](https://www.jstatsoft.org/article/view/v008i14) Дж. Марсалья.
  
-Помимо наиболее популярных xorshift32 и xorshift64 генераторов были реализованы генераторы xorwow и xoshiro_256ss (TO DO), xoshiro_256p (TO DO). Дла последних помимо XOR и shift, так же используют функцию rotate. Их реали
+Помимо наиболее популярных xorshift32 и xorshift64 генераторов были реализованы генераторы xorwow и xoshiro_256ss, xoshiro_256p. Дdа последних помимо XOR и shift, так же используют функцию rotate. Описание этих генераторов псевдослучайных чисел были взяты из [работ](http://prng.di.unimi.it) Себастьяно Винья и Дэвида Блэкмана.
  
  ## Представленные генераторы
  
@@ -31,11 +31,15 @@ mp_err mp_xorwow (struct mp_xorwow_set *params, mp_int *num) MP_WUR;
 
 4) Xoshiro256++: имеет четыре 64-битных слова состояния и период 2^256 -1.
 
-
+```C
+mp_err mp_xoshiro_256p (struct mp_xoshiro_set *params, mp_int *num) MP_WUR;
+```
 
 5) Xoshiro256**: имеет четыре 64-битных слова состояния и период 2^256 -1.
 
-
+```C
+mp_err mp_xoshiro_256ss (struct mp_xoshiro_set *params, mp_int *num) MP_WUR;
+```
 
 ## Библиотека LibTomMath
 
@@ -51,6 +55,13 @@ mp_err mp_xorwow (struct mp_xorwow_set *params, mp_int *num) MP_WUR;
  ```C
  struct mp_xorwow_set {
     mp_int x, y, z, w, v, d;
+};
+```
+
+Добавлена struct mp_xoshiro_set для внутренних параметов состоятния генератора Xoshiro256++ и Xoshiro256**.
+ ```C
+ struct mp_xoshiro_set {
+    mp_int a, b, c, d;
 };
 ```
 
@@ -70,13 +81,19 @@ mp_err mp_xorwow (struct mp_xorwow_set *params, mp_int *num) MP_WUR;
 #define MY_SEED_32 2463542
 #define MY_SEED_64 8817264525252LL
 
-// Параметры для xorwow 32-bit
+// Параметры состояния для xorwow 32-bit
 #define WOW_X 123456789
 #define WOW_Y 362436069
 #define WOW_Z 521288629
 #define WOW_W 88675123
 #define WOW_V 5783321
 #define WOW_D 6615241
+
+// Параметры состояния для xorshiro 256-bit
+#define XOSHIRO_1 44674407370955LL
+#define XOSHIRO_2 38817264525252LL
+#define XOSHIRO_3 12345678909876LL
+#define XOSHIRO_4 337711884509LL
 ```
 
 ## Тесты
