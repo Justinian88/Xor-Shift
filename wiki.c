@@ -81,18 +81,73 @@ mp_err mp_xorwow (struct mp_xorwow_set *params, mp_int *num)
     return err;
 }
 
-/*
-mp_err mp_xorshiro_256ss ()
+mp_err mp_xoshiro_rotl (mp_int *x, int k, mp_int *num){
+    mp_err err;
+    mp_int buff1, buff2, buff3, mp_k;
+    err = mp_init_multi(&buff1, &buff2, &buff3, &mp_k, NULL);
+    int k2;
+    k2 = 64 - k;
+    printf("k = %d", k2);
+    err = mp_mul_2d(x, k, &buff1); // (x << k)
+    err = mp_div_2d(x, k2, &buff2, &buff3); // (x >> (64 - k))
+
+    err = mp_or(&buff1, &buff2, num); // (x << k) | (x >> (64 - k));
+    return err;
+}
+
+mp_err mp_xorshiro_256ss (struct mp_xoshiro_set *params, mp_int *num)
 {
     mp_err err;
+    mp_int buff, tt, no_name;
+    int n17 = 17;
+    int n23 = 23;
+    int n45 = 45;
+    err = mp_init_multi(&no_name, &buff, &tt, NULL);
+
+    err = mp_add(&params->a, &params->d, &buff);
+    err = mp_xoshiro_rotl(&buff, n23, &buff);
+    err = mp_add(&buff, &params->a, num);
+
+    err = mp_mul_2d(&params->b, n17, &tt);
+
+    err = mp_xor(&params->c, &params->a, &params->a);
+    err = mp_xor(&params->b, &params->d, &params->d)
+            ;
+    err = mp_xor(&params->c, &params->b, &params->b);
+    err = mp_xor(&params->d, &params->a, &params->a);
+    err = mp_xor(&tt, &params->c, &params->c);
+
+    err = mp_xoshiro_rotl(&params->d, n45, &params->c);
 
     return err;
 }
 
-mp_err mp_xorshiro_256p ()
+mp_err mp_xorshiro_256p (struct mp_xoshiro_set *params, mp_int *num)
 {
     mp_err err;
+    mp_int buff, tt, no_name;
+    int n5 = 5;
+    int n7 = 7;
+    int n9 = 9;
+    int n17 = 17;
+    int n45 = 45;
+    err = mp_init_multi(&no_name, &buff, &tt, NULL);
+
+    err = mp_mul(&params->b, n5, &buff);
+    err = mp_xoshiro_rotl(&buff, n7, &buff);
+    err = mp_mul(&buff, n9, &num);
+
+    err = mp_mul_2d(&params->b, n17, &tt);
+
+    err = mp_xor(&params->c, &params->a, &params->a);
+    err = mp_xor(&params->b, &params->d, &params->d)
+            ;
+    err = mp_xor(&params->c, &params->b, &params->b);
+    err = mp_xor(&params->d, &params->a, &params->a);
+    err = mp_xor(&tt, &params->c, &params->c);
+
+    err = mp_xoshiro_rotl(&params->d, n45, &params->c);
 
     return err;
 }
-*/
+
