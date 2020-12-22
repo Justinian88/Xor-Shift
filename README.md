@@ -42,6 +42,13 @@ mp_err mp_xorwow (struct mp_xorwow_set *params, mp_int *num) MP_WUR;
 
 Добавлены инициализации описанных ранее генераторов псевдослучайных чисел.
 
+Добавлена struct mp_xorwow_set для внутренних параметов состоятния генератора Xorwow.
+ ```C
+ struct mp_xorwow_set {
+    mp_int x, y, z, w, v, d;
+};
+```
+
 ### wiki.c
 
 Реализации генераторов для библиотеки LibTomMath.
