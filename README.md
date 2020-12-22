@@ -102,3 +102,5 @@ mp_err mp_xoshiro_256ss (struct mp_xoshiro_set *params, mp_int *num) MP_WUR;
 Можно заметить, что для небольших значений параметров и зерна генераторы предложенные Дж. Марсалья работают одинаково как без использования сторонних библиотек, так с и ними. Тем не менее при изменении параметров для теста 1 TEST 32-bit integer (a = 7, b = 17, c = 21) можно заметить отклонения в полученных генераторами значених. Это связано непостредственно с использованием библиотеки LibTomMath для больших чисел.
 
 ![alt text](https://sun9-47.userapi.com/impf/5ou0BJkeM04x2vxVy5bMUMlyVUrdHEs9aWP92g/YtFgeSAaeQY.jpg?size=584x686&quality=96&proxy=1&sign=8b4942d349976036213a38eb6d951a17&type=album)
+
+![alt text](https://sun9-58.userapi.com/impf/u3OME-17LzjwNdJAVe_JU_KIpk24o0W3275euA/IG60fr9a_z0.jpg?size=718x302&quality=96&proxy=1&sign=baeb48bdee9a2461be42ae1d9090db4a&type=album)
